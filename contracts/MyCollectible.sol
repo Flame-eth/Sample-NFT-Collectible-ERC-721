@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 import '../@openzeppelin/contracts/token/ERC721/ERC721.sol';
-
+import '../@openzeppelin/contracts/access/Ownable.sol';
 
 contract MyCollectible is ERC721 {
 
@@ -12,7 +12,9 @@ contract MyCollectible is ERC721 {
 
     constructor() ERC721("Color", "COLOR") {
     }
-    function mint(string memory _color)public {
+
+    //Only owner can call this function
+    function mint(string memory _color)public onlyOwner {
         require(_colorExists[_color]);
         uint _id = colors.push(_color);
         _mint(msg.sender, _id);
